@@ -1,0 +1,31 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.1'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.example.webapi'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// tag::actuator[]
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	// end::actuator[]
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	// tag::tests[]
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	// end::tests[]
+	runtimeOnly 'com.h2database:h2'
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
