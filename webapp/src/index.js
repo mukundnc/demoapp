@@ -20,12 +20,10 @@ const config = getConfig();
 const providerConfig = {
   domain: config.domain,
   clientId: config.clientId,
-  // ...(config.audience ? { audience: config.audience } : null),
+  ...(config.audience ? { audience: config.audience } : null),
   redirectUri: window.location.origin,
   onRedirectCallback,
 };
-
-console.log(111, providerConfig);
 
 ReactDOM.render(
   <Auth0Provider {...providerConfig}>
