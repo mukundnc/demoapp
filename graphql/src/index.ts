@@ -2,13 +2,14 @@ import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 
 import typeDefs from './schema';
-import resolvers from './resolver'
+import resolvers from './resolver';
+import ContextValue from './data/contextValue';
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
-const server = new ApolloServer({
+const server = new ApolloServer<ContextValue>({
     typeDefs,
-    resolvers,
+    resolvers
   });
   
   // Passing an ApolloServer instance to the `startStandaloneServer` function:
@@ -16,6 +17,7 @@ const server = new ApolloServer({
   //  2. installs your ApolloServer instance as middleware
   //  3. prepares your app to handle incoming requests
   const { url } = await startStandaloneServer(server, {
+    context: async ({ req }) => new ContextValue({ req, server }),
     listen: { port: 4000 },
   });
   
