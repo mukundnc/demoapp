@@ -1,5 +1,5 @@
 const typeDefs = `#graphql
-  scalar Date
+  #scalar Date
 
   type Person {
     id: Int
@@ -7,8 +7,10 @@ const typeDefs = `#graphql
     lastName: String
     email: String
     phoneNumber: String
-    dateOfBirth: Date
+    dateOfBirth: String
     roles: [PersonRole]
+    appointmentsP: [Appointment]
+    appointmentsD: [Appointment]
   }
 
   type PersonRole {
@@ -17,18 +19,54 @@ const typeDefs = `#graphql
     person: Person
   }
 
-  enum Roles{
+  type Appointment {
+    id: Int
+    bookTime: String
+    patient: Person
+    doctor: Person
+    status: AppointmentStatus
+    lastUpdatedTime: String
+  }
+
+  enum Roles {
     Patient,
     Doctor,
     Admin
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
-  type Query {
-    persons: [Person],
-    personRoles: [PersonRole]
+  enum AppointmentStatus {
+    Pending,
+    Accepted,
+    Cancelled,
+    Rejected,
+    NoShow,
+    Completed
+  }
+
+  input UserContent {
+    email: String,
+    firstName: String
+    lastName: String
+    dob: String
+    roles: [Roles]
+    phoneNumber: String
+  }
+
+  input AppointmentContent {
+    patientId: Int,
+    doctorId: Int,
+    bookTime: String
+  }
+
+  type Query {    
+    getUser(email: String): Person,
+    getAppointments(id: Int, role: Roles): [Appointment],
+  }
+
+  type Mutation {
+    registerUser(content: UserContent!): Person,
+    bookAppointment(content: AppointmentContent): Appointment,
+    updateAppointment(id: Int, status: AppointmentStatus): Appointment,
   }
 `;
 

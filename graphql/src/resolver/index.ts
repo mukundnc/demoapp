@@ -1,13 +1,16 @@
-import dateScalar from '../schema/dateScalar';
+// import dateScalar from '../schema/dateScalar';
+import appointmentResolver from './appointmentResolver';
+import personResolver from './personResolver';
 
-// Resolvers define how to fetch the types defined in your schema.
-// This resolver retrieves books from the "books" array above.
 const resolvers = {
     Query: {
-        persons: (_, __, { dataSources }) => dataSources.personsAPI.getPersons(),
-        personRoles: (_, __, { dataSources }) => dataSources.personRolesAPI.getPersonRoles(),
+      getUser: (_, { email }, { dataSources }) => personResolver.getPersonByEmail(dataSources, email),
+      getAppointments: (_, { id, role }, { dataSources }) => appointmentResolver.getAppointments(dataSources, id, role)
     },
-    Date: dateScalar,
+    Mutation: {
+      registerUser: (_, { content }, { dataSources }) => personResolver.registerPerson(dataSources, content),
+    },
+    // Date: dateScalar,
   };
 
 export default resolvers;

@@ -1,14 +1,13 @@
 import { ApolloServer, HeaderMap } from '@apollo/server';
-import PersonsAPI from './personsApi';
 import { IncomingMessage } from 'http';
+import PersonsAPI from './personsApi';
 import PersonRolesAPI from './personRolesApi';
+import AppointmentsAPI from './appointmentsApi';
+import DataSources from '../models/DataSources';
 
-export default class ContextValue {
+class ContextValue {
     public token: string;
-    public dataSources: {
-      personsAPI: PersonsAPI,
-      personRolesAPI: PersonRolesAPI;
-    };
+    public dataSources: DataSources;
     
     getTokenFromRequest(req: IncomingMessage): string{
         return req.headers.authorization;
@@ -20,6 +19,9 @@ export default class ContextValue {
       this.dataSources = {
         personsAPI: new PersonsAPI({ cache, contextValue: this }),
         personRolesAPI: new PersonRolesAPI({ cache, contextValue: this }),
+        appointmentsAPI: new AppointmentsAPI({ cache, contextValue: this }),
       };
     }
   }
+
+  export default ContextValue;
