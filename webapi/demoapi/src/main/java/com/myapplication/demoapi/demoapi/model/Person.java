@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "email", "phoneNumber" }) })
 public class Person {
     @Id
     @GeneratedValue
@@ -24,7 +25,6 @@ public class Person {
 
     private String lastName;
 
-    @Column(unique = true)
     private String email;
 
     private String phoneNumber;
@@ -37,6 +37,12 @@ public class Person {
     @OneToMany(mappedBy = "person")
     private List<PersonRole> roles;
 
+    @OneToMany(mappedBy = "patient")
+    private List<Appointment> appointmentsP;
+
+    @OneToMany(mappedBy = "doctor")
+    private List<Appointment> appointmentsD;
+
     public Person(){
 
     }
@@ -46,15 +52,13 @@ public class Person {
         String lastName, 
         String email, 
         String phoneNumber, 
-        LocalDate dateOfBirth,
-        List<PersonRole> roles
+        LocalDate dateOfBirth
         ){
             this.firstName = firstName;
             this.lastName = lastName;
             this.email = email;
             this.phoneNumber = phoneNumber;
             this.dateOfBirth = dateOfBirth;
-            this.roles = roles;
     }
 
     public Integer getId(){
@@ -114,6 +118,22 @@ public class Person {
 
     public void  setRoles(List<PersonRole> roles){
         this.roles = roles;
+    }
+
+    public List<Appointment> getAppointmentsD() {
+        return appointmentsD;
+    }
+
+    public void setAppointmentsD(List<Appointment> appointments) {
+        this.appointmentsD = appointments;
+    }
+
+    public List<Appointment> getAppointmentsP() {
+        return appointmentsP;
+    }
+
+    public void setAppointmentsP(List<Appointment> appointments) {
+        this.appointmentsP = appointments;
     }
 
 }
