@@ -4,9 +4,19 @@ import { Container, Row, Col } from "reactstrap";
 import Highlight from "../components/Highlight";
 import Loading from "../components/Loading";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import { useQuery } from '@apollo/client';
+import { GET_USER } from '../utils/queries';
 
 export const ProfileComponent = () => {
   const { user } = useAuth0();
+
+  const { loading, error, data } = useQuery(GET_USER, {
+    variables: { email: user.email}
+  });
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Container className="mb-5">
@@ -24,7 +34,7 @@ export const ProfileComponent = () => {
         </Col>
       </Row>
       <Row>
-        <Highlight>{JSON.stringify(user, null, 2)}</Highlight>
+        <Highlight>{error ?? JSON.stringify(data, null, 2)}</Highlight>
       </Row>
     </Container>
   );

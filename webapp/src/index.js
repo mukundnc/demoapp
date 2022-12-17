@@ -6,8 +6,15 @@ import * as serviceWorker from "./serviceWorker";
 import { Auth0Provider } from "@auth0/auth0-react";
 import history from "./utils/history";
 import { getConfig } from "./config";
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/',
+  cache: new InMemoryCache(),
+});
 
 const onRedirectCallback = (appState) => {
+  console.log(appState);
   history.push(
     appState && appState.returnTo ? appState.returnTo : window.location.pathname
   );
@@ -27,7 +34,9 @@ const providerConfig = {
 
 ReactDOM.render(
   <Auth0Provider {...providerConfig}>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </Auth0Provider>,
   document.getElementById("root")
 );
