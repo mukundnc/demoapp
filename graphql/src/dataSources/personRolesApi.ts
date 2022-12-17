@@ -29,7 +29,6 @@ class PersonRolesAPI extends baseAPI {
     }
 
     async addPersonRole(role: PersonRole) {
-      console.log(role);
       const request: RequestWithBody = {
         body: role
       }  

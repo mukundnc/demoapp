@@ -39,9 +39,7 @@ class PersonResolver {
         };        
         let perResp = await dataSources.personsAPI.addPerson(person);
         person.id = common.getId(perResp, config.personsApi);
-        console.log(11, user.roles);
         for(let index in user.roles){
-            console.log(index, Roles[user.roles[index]]);
             let roleP: PersonRole = {
                 role: Roles[user.roles[index]],
                 id: undefined,
@@ -49,9 +47,7 @@ class PersonResolver {
             }
             let respRole = await dataSources.personRolesAPI.addPersonRole(roleP);
             roleP.id = common.getId(respRole, config.rolesApi);
-            console.log(1, respRole);
             let mapRole = await dataSources.personRolesAPI.mapPersonRole(roleP.id, person.id);
-            console.log(2, mapRole);
         }
         return person;
     }
