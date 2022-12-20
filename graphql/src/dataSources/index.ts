@@ -7,14 +7,20 @@ import DataSources from '../models/DataSources';
 
 class ContextValue {
     public token: string;
+    public cookie: any;
     public dataSources: DataSources;
     
     getTokenFromRequest(req: IncomingMessage): string{
         return req.headers.authorization;
     }
 
+    getCookieFromRequest(req: IncomingMessage): any{
+      return req.headers?.cookie;
+  }
+
     constructor({ req, server }: { req: IncomingMessage; server: ApolloServer<ContextValue> }) {
       this.token = this.getTokenFromRequest(req);
+      this.cookie = this.getCookieFromRequest(req);
       const { cache } = server;
       this.dataSources = {
         personsAPI: new PersonsAPI({ cache, contextValue: this }),

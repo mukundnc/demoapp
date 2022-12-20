@@ -1,24 +1,22 @@
 package com.myapplication.demoapi.demoapi;
 
 import com.myapplication.demoapi.demoapi.model.*;
+import com.myapplication.demoapi.demoapi.repository.AppointmentRepository;
 import com.myapplication.demoapi.demoapi.repository.UserRepository;
 import com.myapplication.demoapi.demoapi.repository.UserRoleRepository;
-import com.myapplication.demoapi.demoapi.repository.AppointmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Configuration
-public class Config {
-    Logger logger = LoggerFactory.getLogger(Config.class);
+public class DataConfig {
+    Logger logger = LoggerFactory.getLogger(DataConfig.class);
     @Bean
     CommandLineRunner commandLineRunner(UserRepository repository, UserRoleRepository roleRepository, AppointmentRepository appointmentRepository){
         return args -> {
@@ -43,18 +41,6 @@ public class Config {
             }
             catch (Exception ex){
                 logger.error(ex.getMessage());
-            }
-        };
-    }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000/")
-                        .allowedMethods("*");
             }
         };
     }

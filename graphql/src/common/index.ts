@@ -11,7 +11,7 @@ class Utils{
     href: string;
 
     constructor(){
-        this.authorization = 'authorization';
+        this.authorization = 'Authorization';
         this.embedded = '_embedded';
         this.links = '_links';
         this.contentTypeUrlList = 'text/uri-list';

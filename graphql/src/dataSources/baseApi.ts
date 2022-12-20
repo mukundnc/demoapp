@@ -13,6 +13,11 @@ class baseAPI extends RESTDataSource {
     
     override willSendRequest(request: WillSendRequestOptions) {
         request.headers[common.authorization] = this.contextValue.token;  
+        request.headers.Cookie = this.contextValue.cookie;
+        console.log(this.contextValue.cookie);
+        console.log(request.headers);
+        // request.headers = this.contextValue.headers;
+        // console.log(request.headers);
     }
 }
 
