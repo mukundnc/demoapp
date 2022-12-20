@@ -57,6 +57,7 @@ export const ExternalApiComponent = () => {
   const callApi = async () => {
     try {
       const token = await getAccessTokenSilently();
+      localStorage.setItem('token', token);
 
       const response = await fetch(`${apiOrigin}/persons`, {
         headers: {
