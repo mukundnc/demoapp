@@ -1,4 +1,6 @@
 import Recharts from './recharts';
+import GoogleCharts from './google';
+import ApaceECharts from './echarts';
 
 
-export { Recharts };
+export { Recharts, GoogleCharts, ApaceECharts };

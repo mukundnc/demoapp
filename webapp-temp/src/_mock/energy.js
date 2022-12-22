@@ -1,6 +1,6 @@
 const energy = {
     "nodes":[
-        {"name":"Agricultural 'waste'"},
+        {"name":"Agricultural 'waste'", "data": {"chartType": "pie", "data": [{"name": "USA", "value": 50}, {"name": "Canada", "value": 50}, {"name": "Mexico", "value": 24.729} ]}},
         {"name":"Bio-conversion"},
         {"name":"Liquid"},
         {"name":"Losses"},
