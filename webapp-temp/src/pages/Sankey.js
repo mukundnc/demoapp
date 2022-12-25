@@ -20,7 +20,7 @@ const SORT_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function SankeyPage() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
 
   function onSelect(args){
     setCount(args.target.value)

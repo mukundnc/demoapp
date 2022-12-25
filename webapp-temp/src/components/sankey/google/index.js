@@ -2,13 +2,14 @@ import { Chart } from "react-google-charts";
 
 export default function SankeyChart({ data }) {
     const options = {
-        // sankey: {
-        //     link: { color: { fill: "#d799ae" } },
-        //     node: {
-        //       colors: ["#a61d4c"],
-        //       label: { color: "#871b47" },
-        //     },
-        // },
+        sankey: {
+            // link: { color: { fill: "#d799ae" } },
+            // node: {
+            //   colors: ["#a61d4c"],
+            //   label: { color: "#871b47" },
+            // },
+            interactivity: true,
+        },
     };
     function getRowData(obj){
         const result = [['From', 'To', 'Weight']];
