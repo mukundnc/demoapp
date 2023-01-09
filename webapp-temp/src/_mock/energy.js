@@ -1,6 +1,6 @@
 const energy = {
     "nodes":[
-        {"name":"Agricultural 'waste'", "data": {"chartType": "pie", "data": [{"name": "USA", "value": 50}, {"name": "Canada", "value": 50}, {"name": "Mexico", "value": 24.729} ]}},
+        {"name":"Agricultural waste"},
         {"name":"Bio-conversion"},
         {"name":"Liquid"},
         {"name":"Losses"},
@@ -120,6 +120,45 @@ const energy = {
         {"source":47,"target":15,"value":289.366}
     ]
 };
+
+const journey = {
+    "nodes": [
+        {"name": "Landing page loaded"},
+        {"name": "Item detail Page"},
+        {"name": "Search"},
+        {"name": "Item detail Page"},
+        {"name": "Landing page loaded"},
+        {"name": "Search"},
+        {"name": "Complete purchase"},
+        {"name": "Item detail Page"},
+        {"name": "Landing page loaded"},
+        {"name": "Item detail Page"},
+        {"name": "Complete purchase"},
+        {"name": "Landing page loaded"},
+        {"name": "Abandon cart"}
+    ],
+    "links": [
+        {"source":0,"target":3,"value":17.5},
+        {"source":1,"target":3,"value":7.9},
+        {"source":1,"target":4,"value":4},
+        {"source":2,"target":4,"value":7.1},
+        {"source":2,"target":5,"value":2.2},
+        {"source":3,"target":6,"value":20.1},
+        {"source":3,"target":7,"value":3.2},
+        {"source":3,"target":8,"value":1.1},
+        {"source":4,"target":6,"value":6.2},
+        {"source":4,"target":7,"value":4.9},
+        {"source":5,"target":8,"value":2.2},        
+        {"source":6,"target":9,"value":26.3},
+        {"source":7,"target":9,"value":6.8},
+        {"source":7,"target":10,"value":2.7},
+        {"source":8,"target":10,"value":1.7},
+        {"source":8,"target":11,"value":1.6},
+        {"source":9,"target":12,"value":33.1},
+        {"source":10,"target":12,"value":4.4},
+        {"source":11,"target":12,"value":1.6},
+    ]
+}
 
 export default energy;
 

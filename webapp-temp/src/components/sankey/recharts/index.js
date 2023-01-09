@@ -1,21 +1,22 @@
 import { Sankey, Tooltip  } from 'recharts';
-import Node from './node';
 import CompNode from './compNode';
+import CompLink from './compLink';
 
 export default function SankeyChart({ data }) {
 
-    setTimeout(() => {
-        if(document.getElementsByClassName("recharts-wrapper").length && document.getElementsByClassName('recharts-pie-sector')[0].children.length){
-            document.querySelectorAll('.recharts-sankey-nodes .recharts-wrapper').forEach(x => {x.outerHTML = x.innerHTML});
-        }
-    }, 3000);
-
     return (
         <Sankey 
+            // nodePadding={150}
+            margin={{
+                left: 50,
+                right: 50,
+                // top: 10,
+                // bottom: 50,
+            }}
             width={960} 
             height={500} 
             data={data}
-            link={{ stroke: '#bcc5cf' }}
+            link={<CompLink />}
             node={(nodeProps) => {
                 const { x, y, width, height, index, payload, containerWidth } = nodeProps;
                 return (<CompNode x={x} y={y} width={width} height={height} index={index} payload={payload} containerWidth={containerWidth}/>)

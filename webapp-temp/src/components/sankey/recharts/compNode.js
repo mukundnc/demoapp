@@ -1,64 +1,56 @@
-import { Pie, PieChart, Sector } from 'recharts';
+import { Pie, PieChart, Sector, Text, Surface } from 'recharts';
+import pieData from '../../../_mock/pieData';
 
 export default function SankeyNode({ x, y, width, height, index, payload, containerWidth }) {
-    const data02 = [
-      {
-        "name": "Group A",
-        "value": 2400
-      },
-      {
-        "name": "Group B",
-        "value": 4567
-      },
-      {
-        "name": "Group C",
-        "value": 1398
-      },
-      {
-        "name": "Group D",
-        "value": 9800
-      },
-      {
-        "name": "Group E",
-        "value": 3908
-      },
-      {
-        "name": "Group F",
-        "value": 4800
-      }
-    ];
+    
+    let py = y;
+    if(height <= 20){
+      height = 20;
+      py -= height/2;
+    }
     if(x!==0){
-      x -=(height/2)-5;
+      x -=(height/2);
     }else{
       x = 10;
     }
-    return (<PieChart x={x} y={y} width={height} height={height}>
-        <Pie 
-          data={data02} 
-          dataKey="value" 
-          nameKey="name" 
-          cx="50%" 
-          cy="50%" 
-          innerRadius={height/3} 
-          outerRadius={height/2} 
-          fill="#82ca9d"
-          label={(props) => renderActiveShape(props, payload.value)}
-          labelLine={false}
-          />
-      </PieChart>)
+    return (
+      <foreignObject x={x} y={y} width={height} height={height}>
+        <PieChart x={x} y={py} width={height} height={height}>
+          <Pie style={{position: 'absolute'}} 
+            data={pieData} 
+            dataKey="value" 
+            nameKey="name" 
+            cx="50%" 
+            cy="50%" 
+            innerRadius={(height-20)/3} 
+            outerRadius={(height-20)/2} 
+            fill="#82ca9d"
+            label={(props) => renderActiveShape(props, payload.name, payload.value, pieData.length)}
+            labelLine={false}
+            startAngle={450}
+            endAngle={90}
+            />
+        </PieChart>
+      </foreignObject>
+      )
     }
 
-  const generateRandomColor = () => {
-    const maxVal = 0xFFFFFF; // 16777215
-    let randomNumber = Math.random() * maxVal; 
-    randomNumber = Math.floor(randomNumber);
-    randomNumber = randomNumber.toString(16);
-    const randColor = randomNumber.padStart(6, 0);   
-    return `#${randColor.toUpperCase()}`
+  const generateRandomColor = (index, length) => {
+    if(index+1 === length)
+      return 'rgb(0 96 95)';
+    let r = 210;
+    let g = 250;
+    let b = 220;
+    const gradient = 100/length;
+    r -= Math.floor(index*gradient);
+    g -= Math.floor(index*gradient);
+    b -= Math.floor(index*gradient);
+    return `rgb(${r} ${g} ${b})`;
   }
 
-  const renderActiveShape = (props: any, text: any) => {
-    const fill = generateRandomColor()
+  const renderActiveShape = (props, name, value, length) => {
+    const fill = generateRandomColor(props.index, length);
+    const text = `${value.toFixed(1)}K`;
     const {
       cx,
       cy,
@@ -66,14 +58,26 @@ export default function SankeyNode({ x, y, width, height, index, payload, contai
       outerRadius,
       startAngle,
       endAngle,
-      // fill,
     } = props;
   
     return (
       <g>
-        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+        <Text 
+          x={cx} 
+          y={cy+3} 
+          textAnchor="middle" 
+          fill={'rgb(0 0 0)'} 
+          style={{fontSize: '10px'}}>
          {text}
-        </text>
+        </Text> 
+        <Text 
+          x={cx} 
+          y={cy+outerRadius+10} 
+          textAnchor="middle" 
+          fill={'blue'} 
+          style={{fontSize: '10px'}}>
+        {name}
+        </Text> 
         <Sector
           cx={cx}
           cy={cy}
@@ -82,7 +86,7 @@ export default function SankeyNode({ x, y, width, height, index, payload, contai
           startAngle={startAngle}
           endAngle={endAngle}
           fill={fill}
-        />   
+        /> 
       </g>
     );
   };
